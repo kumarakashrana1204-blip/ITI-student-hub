@@ -1,3 +1,12 @@
-document.querySelector('.login-btn').addEventListener('click',()=>alert('Login system will be added in the next step.'));
-document.querySelector('.upload .primary').addEventListener('click',()=>alert('Student upload system will be added after login and Firebase setup.'));
-document.querySelector('.hero .primary').addEventListener('click',()=>document.querySelector('.latest').scrollIntoView({behavior:'smooth'}));
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import {getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+const firebaseConfig={apiKey:"AIzaSyAdlKjT_iVGK6vOEOb_fhkSu2ZFJikPK-s",authDomain:"iti-student-hub.firebaseapp.com",projectId:"iti-student-hub",storageBucket:"iti-student-hub.firebasestorage.app",messagingSenderId:"185676168422",appId:"1:185676168422:web:8ee0c6aae719265e258f27",measurementId:"G-TNBRNQVRR3"};
+const app=initializeApp(firebaseConfig),auth=getAuth(app);
+const $=id=>document.getElementById(id);
+$("loginTab").onclick=()=>{$("loginForm").classList.remove("hidden");$("signupForm").classList.add("hidden");$("loginTab").classList.add("active");$("signupTab").classList.remove("active")};
+$("signupTab").onclick=()=>{$("signupForm").classList.remove("hidden");$("loginForm").classList.add("hidden");$("signupTab").classList.add("active");$("loginTab").classList.remove("active")};
+function msg(e){return ({'auth/invalid-credential':'Email or password is incorrect.','auth/invalid-email':'Enter a valid email.','auth/email-already-in-use':'This email is already registered.','auth/weak-password':'Password must be at least 6 characters.','auth/network-request-failed':'Network error. Try again.'})[e.code]||e.message}
+$("loginForm").onsubmit=async e=>{e.preventDefault();$("loginMessage").textContent="Logging in...";try{await signInWithEmailAndPassword(auth,$("loginEmail").value.trim(),$("loginPassword").value);$("loginMessage").textContent="Login successful!";}catch(x){$("loginMessage").textContent=msg(x)}};
+$("signupForm").onsubmit=async e=>{e.preventDefault();$("signupMessage").textContent="Creating account...";try{const profile={name:$("signupName").value.trim(),trade:$("signupTrade").value.trim(),batch:$("signupBatch").value.trim(),email:$("signupEmail").value.trim()};await createUserWithEmailAndPassword(auth,profile.email,$("signupPassword").value);localStorage.setItem("itiStudentProfile",JSON.stringify(profile));$("signupMessage").textContent="Account created successfully!";e.target.reset()}catch(x){$("signupMessage").textContent=msg(x)}};
+onAuthStateChanged(auth,user=>{if(user){const p=JSON.parse(localStorage.getItem("itiStudentProfile")||"{}");$("headerUser").innerHTML=`<span>👤 ${p.name||user.email}</span> <button id="logout">Logout</button>`;$("logout").onclick=()=>signOut(auth)}else $("headerUser").innerHTML=""});
+$("exploreBtn").onclick=()=>document.querySelector(".latest").scrollIntoView({behavior:"smooth"});$("uploadBtn").onclick=()=>alert("Real file upload will be added next.");
