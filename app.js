@@ -4,7 +4,9 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
+  onAuthStateChanged,await loadNotes();
+await loadAdminPanel();
+await setupNoticeSystem();
   signOut
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
