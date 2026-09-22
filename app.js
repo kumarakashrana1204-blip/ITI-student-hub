@@ -1195,3 +1195,216 @@ onAuthStateChanged(
 
   }
 );
+/* =========================
+   NOTICE SYSTEM
+========================= */
+
+async function loadNotices() {
+
+  const noticeList = $("noticeList");
+
+  if (!noticeList) return;
+
+  noticeList.innerHTML =
+    "<p class='muted'>📢 Notices loading...</p>";
+
+  try {
+
+    const snapshot = await getDocs(
+      collection(db, "notices")
+    );
+
+    const notices = snapshot.docs
+      .map(item => ({
+        id: item.id,
+        ...item.data()
+      }))
+      .sort((a, b) => {
+
+        const aTime =
+          a.createdAt?.seconds || 0;
+
+        const bTime =
+          b.createdAt?.seconds || 0;
+
+        return bTime - aTime;
+
+      });
+
+
+    if (!notices.length) {
+
+      noticeList.innerHTML =
+        `<p class="muted">
+          📭 अभी कोई notice नहीं है।
+        </p>`;
+
+      return;
+    }
+
+
+    noticeList.innerHTML =
+      notices.map(notice => `
+
+        <article class="note">
+
+          <div class="note-main">
+
+            <div class="note-title">
+              📢 ${escapeHtml(notice.title)}
+            </div>
+
+            <div class="note-meta">
+              ${escapeHtml(notice.text)}
+            </div>
+
+          </div>
+
+        </article>
+
+      `).join("");
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    noticeList.innerHTML =
+      `<p class="muted">
+        ❌ Notices load नहीं हो सके।
+      </p>`;
+
+  }
+
+}
+
+
+/* =========================
+   CREATE NOTICE
+========================= */
+
+$("noticeForm")?.addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+
+    if (!isAdmin()) {
+
+      showMessage(
+        "noticeMessage",
+        "❌ केवल Admin notice बना सकता है।"
+      );
+
+      return;
+    }
+
+
+    const title =
+      $("noticeTitle")
+        .value
+        .trim();
+
+    const text =
+      $("noticeText")
+        .value
+        .trim();
+
+
+    if (!title || !text) {
+
+      showMessage(
+        "noticeMessage",
+        "⚠️ Title और notice details भरें।"
+      );
+
+      return;
+    }
+
+
+    showMessage(
+      "noticeMessage",
+      "📢 Notice publish हो रहा है..."
+    );
+
+
+    try {
+
+      await addDoc(
+        collection(db, "notices"),
+        {
+
+          title,
+
+          text,
+
+          createdBy:
+            currentUser.email,
+
+          createdAt:
+            serverTimestamp()
+
+        }
+      );
+
+
+      $("noticeForm").reset();
+
+
+      showMessage(
+        "noticeMessage",
+        "✅ Notice successfully published!"
+      );
+
+
+      await loadNotices();
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        "noticeMessage",
+        "❌ Notice publish नहीं हुआ।"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================
+   ADMIN NOTICE VISIBILITY
+========================= */
+
+async function setupNoticeSystem() {
+
+  await loadNotices();
+
+
+  const adminNotice =
+    $("admin-notice-section");
+
+
+  if (adminNotice) {
+
+    adminNotice.classList.toggle(
+      "hidden",
+      !isAdmin()
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RUN NOTICE SYSTEM
+========================= */
+
+if (currentUser) {
+  setupNoticeSystem();
+}
