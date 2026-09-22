@@ -1,12 +1,540 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ITI Student Hub</title><link rel="stylesheet" href="style.css"></head><body>
-<header><div class="brand">🎓 ITI Student Hub</div><div id="headerUser"></div></header>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ITI Student Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="brand">🎓 ITI Student Hub</div>
+  <div id="headerUser"></div>
+</header>
+
 <main>
-<section class="hero"><p>LEARN • SHARE • GROW</p><h1>Your ITI class, all in one place.</h1><p>Notes, practical files, notices and useful information for ITI students.</p><button class="primary" id="exploreBtn">Explore Notes</button></section>
-<section class="auth-card"><div class="tabs"><button id="loginTab" class="tab active">Login</button><button id="signupTab" class="tab">Create Account</button></div>
-<form id="loginForm"><h2>Student Login</h2><input id="loginEmail" type="email" placeholder="Email address" required><input id="loginPassword" type="password" placeholder="Password" required minlength="6"><button class="primary full">Login</button><p id="loginMessage"></p></form>
-<form id="signupForm" class="hidden"><h2>Create Student Account</h2><input id="signupName" placeholder="Student name" required><input id="signupTrade" placeholder="ITI Trade" required><input id="signupBatch" placeholder="Batch / Year" required><input id="signupEmail" type="email" placeholder="Email address" required><input id="signupPassword" type="password" placeholder="Password (minimum 6 characters)" required minlength="6"><button class="primary full">Create Account</button><p id="signupMessage"></p></form></section>
-<section class="grid"><div class="card">📚<b>Notes</b><small>Study material & PDFs</small></div><div class="card">📢<b>Information</b><small>Notices & updates</small></div><div class="card">🔧<b>Practicals</b><small>Practical files & guides</small></div><div class="card">📝<b>Question Papers</b><small>Previous papers</small></div></section>
-<section class="latest"><h2>Latest uploads</h2><div class="item">📄 <span><b>Welcome to ITI Student Hub</b><small>General Information</small></span></div><div class="item">📘 <span><b>Notes will appear here</b><small>Study Notes</small></span></div><div class="item">📢 <span><b>Important notices</b><small>Information</small></span></div></section>
-<section class="upload"><h2>Student uploads</h2><p>Real file uploads will be added in the next step.</p><button class="primary" id="uploadBtn">＋ Upload</button></section>
-</main><nav><a id="navHome">⌂<small>Home</small></a><a>📚<small>Notes</small></a><a>📢<small>Info</small></a><a>👤<small>Profile</small></a></nav>
-<script type="module" src="app.js"></script></body></html>
+
+  <!-- HOME -->
+  <section class="hero">
+    <p class="eyebrow">LEARN • SHARE • GROW</p>
+
+    <h1>
+      Your ITI class,
+      all in one place.
+    </h1>
+
+    <p>
+      Notes, practical files, notices and useful
+      information for ITI students.
+    </p>
+
+    <button class="primary" id="exploreBtn">
+      Explore Notes
+    </button>
+  </section>
+
+
+  <!-- LOGIN / SIGNUP -->
+  <section class="auth-card" id="authCard">
+
+    <div class="tabs">
+
+      <button
+        id="loginTab"
+        class="tab active">
+        Login
+      </button>
+
+      <button
+        id="signupTab"
+        class="tab">
+        Create Account
+      </button>
+
+    </div>
+
+
+    <!-- LOGIN -->
+
+    <form id="loginForm">
+
+      <h2>Student Login</h2>
+
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="Email address"
+        required>
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="Password"
+        required>
+
+      <button class="primary full">
+        Login
+      </button>
+
+      <p id="loginMessage"></p>
+
+    </form>
+
+
+    <!-- SIGNUP -->
+
+    <form
+      id="signupForm"
+      class="hidden">
+
+      <h2>Create Student Account</h2>
+
+      <input
+        id="signupName"
+        placeholder="Student name"
+        required>
+
+      <input
+        id="signupTrade"
+        placeholder="ITI Trade"
+        required>
+
+      <input
+        id="signupBatch"
+        placeholder="Batch / Year"
+        required>
+
+      <input
+        id="signupEmail"
+        type="email"
+        placeholder="Email address"
+        required>
+
+      <input
+        id="signupPassword"
+        type="password"
+        placeholder="Password (minimum 6 characters)"
+        minlength="6"
+        required>
+
+      <button class="primary full">
+        Create Account
+      </button>
+
+      <p id="signupMessage"></p>
+
+    </form>
+
+  </section>
+
+
+
+  <!-- STUDENT AREA -->
+
+  <section
+    id="appSection"
+    class="hidden">
+
+
+    <!-- DASHBOARD CARDS -->
+
+    <section class="grid">
+
+      <button
+        class="card nav-card"
+        id="navNotesCard">
+
+        📚
+
+        <b>Notes</b>
+
+        <small>
+          Study material & PDFs
+        </small>
+
+      </button>
+
+
+      <button
+        class="card nav-card"
+        id="navUploadCard">
+
+        📤
+
+        <b>Upload</b>
+
+        <small>
+          Share your notes
+        </small>
+
+      </button>
+
+
+      <button
+        class="card nav-card"
+        id="navInfoCard">
+
+        📢
+
+        <b>Information</b>
+
+        <small>
+          Notices & updates
+        </small>
+
+      </button>
+
+
+      <button
+        class="card nav-card"
+        id="navAdminCard">
+
+        🛡️
+
+        <b>Admin</b>
+
+        <small>
+          Manage uploads
+        </small>
+
+      </button>
+
+    </section>
+
+
+
+    <!-- NOTES -->
+
+    <section
+      class="latest"
+      id="notes-section">
+
+      <div class="section-head">
+
+        <div>
+
+          <p class="eyebrow dark">
+            APPROVED MATERIAL
+          </p>
+
+          <h2>
+            📚 Notes Library
+          </h2>
+
+        </div>
+
+        <button
+          class="secondary"
+          id="refreshBtn">
+
+          ↻ Refresh
+
+        </button>
+
+      </div>
+
+
+      <div class="filters">
+
+        <input
+          id="searchInput"
+          placeholder="🔍 Search notes...">
+
+
+        <select id="tradeFilter">
+
+          <option value="">
+            All Trades
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div id="notesList">
+
+        <p class="muted">
+          Login to view notes.
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- UPLOAD -->
+
+    <section
+      class="upload"
+      id="upload-section">
+
+      <p class="eyebrow dark">
+        SHARE MATERIAL
+      </p>
+
+      <h2>
+        📤 Upload a Note
+      </h2>
+
+      <p>
+        PDF या image upload करो।
+        Admin approval के बाद यह सभी students
+        को दिखाई देगा।
+      </p>
+
+
+      <form id="uploadForm">
+
+        <input
+          id="noteTitle"
+          placeholder="Note title"
+          required>
+
+
+        <input
+          id="noteTrade"
+          placeholder="ITI Trade"
+          required>
+
+
+        <input
+          id="noteSubject"
+          placeholder="Subject"
+          required>
+
+
+        <textarea
+          id="noteDescription"
+          placeholder="Short description (optional)">
+        </textarea>
+
+
+        <input
+          id="noteFile"
+          type="file"
+          accept="application/pdf,image/*"
+          required>
+
+
+        <small
+          id="fileName"
+          class="muted">
+
+          No file selected
+
+        </small>
+
+
+        <button
+          class="primary full">
+
+          📤 Upload Note
+
+        </button>
+
+
+        <p id="uploadMessage"></p>
+
+      </form>
+
+    </section>
+
+
+
+    <!-- INFORMATION -->
+
+    <section
+      class="latest"
+      id="info-section">
+
+      <p class="eyebrow dark">
+        INFORMATION
+      </p>
+
+      <h2>
+        📢 Notices
+      </h2>
+
+      <div id="noticeList">
+
+        <p class="muted">
+          No notices yet.
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ADMIN PANEL -->
+
+    <section
+      class="latest hidden"
+      id="admin-section">
+
+      <div class="section-head">
+
+        <div>
+
+          <p class="eyebrow dark">
+            ADMINISTRATION
+          </p>
+
+          <h2>
+            🛡️ Admin Dashboard
+          </h2>
+
+        </div>
+
+
+        <button
+          class="secondary"
+          id="adminRefresh">
+
+          ↻ Refresh
+
+        </button>
+
+      </div>
+
+
+      <!-- ADMIN STATS -->
+
+      <div class="grid admin-stats">
+
+        <div class="card">
+
+          <span>👨‍🎓</span>
+
+          <b id="studentCount">
+            0
+          </b>
+
+          <small>
+            Students
+          </small>
+
+        </div>
+
+
+        <div class="card">
+
+          <span>⏳</span>
+
+          <b id="pendingCount">
+            0
+          </b>
+
+          <small>
+            Pending Notes
+          </small>
+
+        </div>
+
+
+        <div class="card">
+
+          <span>✅</span>
+
+          <b id="approvedCount">
+            0
+          </b>
+
+          <small>
+            Approved Notes
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <h3>
+        ⏳ Pending Notes
+      </h3>
+
+
+      <p
+        id="adminMessage"
+        class="muted">
+      </p>
+
+
+      <div id="adminList">
+
+        <p class="muted">
+          Admin access required.
+        </p>
+
+      </div>
+
+    </section>
+
+  </section>
+
+</main>
+
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<nav>
+
+  <a id="navHome">
+
+    ⌂
+
+    <small>
+      Home
+    </small>
+
+  </a>
+
+
+  <a id="navNotes">
+
+    📚
+
+    <small>
+      Notes
+    </small>
+
+  </a>
+
+
+  <a id="navUpload">
+
+    📤
+
+    <small>
+      Upload
+    </small>
+
+  </a>
+
+
+  <a id="navInfo">
+
+    📢
+
+    <small>
+      Info
+    </small>
+
+  </a>
+
+</nav>
+
+
+<script
+  type="module"
+  src="app.js">
+</script>
+
+</body>
+</html>
