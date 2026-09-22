@@ -371,6 +371,47 @@
 
 
 
+    <!-- ADMIN NOTICE PANEL -->
+
+<section
+  class="latest hidden"
+  id="admin-notice-section">
+
+  <p class="eyebrow dark">
+    ADMINISTRATION
+  </p>
+
+  <h2>📢 Create Notice</h2>
+
+  <form id="noticeForm">
+
+    <input
+      id="noticeTitle"
+      type="text"
+      placeholder="Notice title"
+      required>
+
+    <textarea
+      id="noticeText"
+      placeholder="Notice details..."
+      rows="5"
+      required></textarea>
+
+    <button
+      type="submit"
+      class="primary full">
+      📢 Publish Notice
+    </button>
+
+    <p id="noticeMessage"></p>
+
+  </form>
+
+  <h3>Published Notices</h3>
+
+  <div id="adminNoticeList"></div>
+
+</section>
     <!-- ADMIN PANEL -->
 
     <section
